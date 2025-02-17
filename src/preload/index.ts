@@ -1,9 +1,11 @@
 import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { getPDFURL } from './pdf';
+import { splitPDF } from './pdf';
 
 // Custom APIs for renderer
-const api = {}
+const api = {
+  "split-pdf": splitPDF
+}
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
@@ -12,9 +14,6 @@ if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI);
     contextBridge.exposeInMainWorld('api', api);
-    contextBridge.exposeInMainWorld('pdf', {
-      pdfURL: getPDFURL,
-    });
   } catch (error) {
     console.error(error)
   }

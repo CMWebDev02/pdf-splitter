@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
+import { EmbeddedPDF } from "./components/EmbeddedPDF";
 
 export function App(): JSX.Element {
   // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
-  const [ url, setURL ] = useState(''); 
+  const [ PDFURLsArray, setPDFURLsArray ] = useState<string[]>([]); 
   
   useEffect(() => {
     function decodePDFIntoBlob(fileString: string) {
@@ -24,11 +25,10 @@ export function App(): JSX.Element {
     }
 
     async function retrieveURL() {
-      const PDF = await window['pdf'].pdfURL()
-      // const pdfBlob = new Blob([PDF], {type: "application/pdf"});
-      // const blobURL = URL.createObjectURL(pdfBlob);
-      const newBlob = decodePDFIntoBlob(PDF)
-      setURL(newBlob);
+      const PDFs = await window.api['split-pdf']();
+      const pdfArray = PDFs.map(PDF => decodePDFIntoBlob(PDF)); 
+      setPDFURLsArray(pdfArray);
+      console.log(PDFURLsArray);
     }
 
     retrieveURL();
@@ -36,8 +36,8 @@ export function App(): JSX.Element {
 
   return (
     <>
-      <iframe src={url}/> 
       <h1>Test</h1>
+      {PDFURLsArray.length !== 0 && PDFURLsArray.map(PDFURL => <EmbeddedPDF pdfSRC={PDFURL} />)}
     </>
 
   )
