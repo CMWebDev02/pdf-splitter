@@ -5,7 +5,7 @@ import {createNewPDF, getPDFURIs} from './pdf'
 // Custom APIs for renderer
 const api = {
   'splitPDF': getPDFURIs,
-  'convertPDFToImages': createNewPDF,
+  'createNewPDF': createNewPDF,
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

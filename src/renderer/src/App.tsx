@@ -28,10 +28,10 @@ export function App(): JSX.Element {
     })
   }
 
-  function createNewPDF() {
-    if (selectedPageArray.length > 0) return;
+  async function createNewPDF() {
+    if (selectedPageArray.length <= 0) return;
 
-    
+    await window.api.createNewPDF(selectedPageArray)
   }
 
   return (
