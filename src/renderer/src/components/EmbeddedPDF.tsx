@@ -1,7 +1,7 @@
 interface EmbeddedPDFProps {
     pdfSRC: string;
     index: number;
-    addPageToArray: (page: number) => {}
+    addPageToArray: (page: number) => void
 }
 
 export function EmbeddedPDF({pdfSRC, index, addPageToArray}: EmbeddedPDFProps) {
@@ -11,6 +11,9 @@ export function EmbeddedPDF({pdfSRC, index, addPageToArray}: EmbeddedPDFProps) {
     }
 
     return (
-        <iframe src={`${pdfSRC}#toolbar=0`} onClick={handleClick}/>
+        <div>
+            <iframe src={`${pdfSRC}#toolbar=0`}/>
+            <button onClick={handleClick}>Page#{index}</button>
+        </div>
     )
 }

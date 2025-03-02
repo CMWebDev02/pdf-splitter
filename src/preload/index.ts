@@ -1,11 +1,11 @@
 import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import {convertPDFToImages, getPDFURLs} from './pdf'
+import {createNewPDF, getPDFURIs} from './pdf'
 
 // Custom APIs for renderer
 const api = {
-  'splitPDF': getPDFURLs,
-  'convertPDFToImages': convertPDFToImages,
+  'splitPDF': getPDFURIs,
+  'convertPDFToImages': createNewPDF,
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

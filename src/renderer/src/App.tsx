@@ -3,7 +3,7 @@ import { EmbeddedPDF } from "./components/EmbeddedPDF";
 
 export function App(): JSX.Element {
   // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
-  const [ PDFURLsArray, setPDFURLsArray ] = useState<string[]>([]); 
+  const [ PDFURLsArray, setPDFURLsArray ] = useState<string[]>([]);
 
   const [ selectedPageArray, setSelectedPageArray ] = useState<number[]>([])
 
@@ -18,15 +18,27 @@ export function App(): JSX.Element {
 
   function addPageToArray(page: number) {
     setSelectedPageArray(prevPages => {
-      return [...prevPages, page];
+      let newPageArray: number[] = [];
+      if (prevPages.includes(page)) {
+        newPageArray = [...prevPages].filter(currentPage => currentPage !== page);
+      } else {
+        newPageArray = [...prevPages, page];
+      }
+      return newPageArray.sort((a, b) => a - b);
     })
+  }
 
-    console.log(selectedPageArray)
+  function createNewPDF() {
+    if (selectedPageArray.length > 0) return;
+
+    
   }
 
   return (
     <>
+      <h1>{selectedPageArray}</h1>
       {PDFURLsArray.length !== 0 && PDFURLsArray.map((PDFURL, index) => <EmbeddedPDF key={`pdf-page-${index}`} pdfSRC={PDFURL} index={index} addPageToArray={addPageToArray} />)}
+      <button onClick={createNewPDF}>Split PDF</button>
     </>
 
   )
