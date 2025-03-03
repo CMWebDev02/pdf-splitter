@@ -4,7 +4,7 @@ declare global {
   interface Window {
     electron: ElectronAPI;
     api: {
-      splitPDF: () => Promise<string[]>;
+      splitPDF: (pdfFilePath: ArrayBuffer) => Promise<string[]>;
       createNewPDF: (selectedPages: number[]) => void;
     };
   }

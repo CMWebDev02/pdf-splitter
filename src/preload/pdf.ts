@@ -2,9 +2,11 @@ import pdfLib from 'pdf-lib';
 const { PDFDocument } = pdfLib;
 import { readFile, writeFile } from 'fs/promises';
 
-export async function getPDFURIs() {
-  const initialPDF = await PDFDocument.load(await readFile('./resources/Temp.pdf'));
+export async function getPDFURIs(pdfFile: ArrayBuffer) {
+  const initialPDF = await PDFDocument.load(pdfFile);
   const initialPDFPageCount = initialPDF.getPageCount();
+
+  console;
 
   const savedPages: string[] = [];
 
