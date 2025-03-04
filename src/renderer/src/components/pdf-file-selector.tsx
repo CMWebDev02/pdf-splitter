@@ -10,9 +10,8 @@ export default function PDFFileSelector({ labelText, setFile, currentFile }: PDF
 
   return (
     <div>
-      <label htmlFor={`${labelText}-input`}>{labelText}</label>
+      <h2>Selected PDF File: {currentFile !== null && currentFile?.name}</h2>
       <input type="file" id={`${labelText}-input`} onChange={setFile} accept="application/pdf" />
-      {currentFile !== null && <h2>{currentFile?.name}</h2>}
     </div>
   );
 }
