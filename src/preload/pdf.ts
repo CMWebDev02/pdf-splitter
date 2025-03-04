@@ -1,6 +1,7 @@
 import pdfLib from 'pdf-lib';
 const { PDFDocument } = pdfLib;
-import { readFile, writeFile } from 'fs/promises';
+import fs from 'fs/promises';
+import path from 'path';
 
 export async function getPDFURIs(pdfFile: ArrayBuffer) {
   const initialPDF = await PDFDocument.load(pdfFile);
@@ -27,8 +28,8 @@ export async function getPDFURIs(pdfFile: ArrayBuffer) {
   return savedPages;
 }
 
-export async function createNewPDF(selectedPages: number[]) {
-  const initialPDF = await PDFDocument.load(await readFile('./resources/Temp.pdf'));
+export async function createNewPDF(selectedPages: number[], saveFolderPath: string, newFileName: string, pdfFile: ArrayBuffer) {
+  const initialPDF = await PDFDocument.load(pdfFile);
   const newPDF = await PDFDocument.create();
 
   const pagesToCopy = await newPDF.copyPages(initialPDF, selectedPages);
@@ -36,5 +37,5 @@ export async function createNewPDF(selectedPages: number[]) {
 
   const savedPDFFile = await newPDF.save();
 
-  await writeFile('./resources/newPDF.pdf', savedPDFFile);
+  await fs.writeFile(path.join(saveFolderPath, `${newFileName}.pdf`), savedPDFFile);
 }

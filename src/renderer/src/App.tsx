@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import { EmbeddedPDF } from './components/embedded-pdf';
 import PDFFileSelector from './components/pdf-file-selector';
-import SavePathSetter from './components/save-path-setter';
 
 export function App(): JSX.Element {
   // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
@@ -11,15 +10,20 @@ export function App(): JSX.Element {
   const [selectedPageArray, setSelectedPageArray] = useState<number[]>([]);
 
   const [pdfFile, setPDFFile] = useState<File | null>(null);
-  const [folderPathString, setFolderPathString] = useState<string>("");
+
+  const [newFileName, setNewFileName] = useState<string>('');
+
+  const [saveFolderPath, setSaveFolderPath] = useState<string>('');
 
   useEffect(() => {
     async function checkSaveLocation() {
-      const isValid = window.api;      
+      const folderPath = await window.api.getSaveLocation();
+
+      setSaveFolderPath(folderPath);
     }
 
     checkSaveLocation();
-  }, [])
+  }, []);
 
   async function loadDisplayPDF(e: ChangeEvent<HTMLInputElement>) {
     if (e.target !== null && e.target?.files !== null) {
@@ -45,17 +49,21 @@ export function App(): JSX.Element {
   }
 
   async function createNewPDF() {
-    if (selectedPageArray.length <= 0) return;
+    if (selectedPageArray.length <= 0 || newFileName == '') return;
 
-    await window.api.createNewPDF(selectedPageArray);
+    if (pdfFile !== null) {
+      const pdfFileArrayBuffer = await pdfFile.arrayBuffer();
+      window.api.createNewPDF(selectedPageArray, saveFolderPath, newFileName, pdfFileArrayBuffer);
+    }
   }
 
   return (
     <>
       <h1>{selectedPageArray}</h1>
-      <SavePathSetter setFolderPath={setFolderPathString} currentFolderPath={folderPathString} />
+      <h5>SaveFolder: {saveFolderPath}</h5>
       <PDFFileSelector labelText={'Choose PDF File:'} setFile={loadDisplayPDF} currentFile={pdfFile} />
       {PDFURLsArray.length !== 0 && PDFURLsArray.map((PDFURL, index) => <EmbeddedPDF key={`pdf-page-${index}`} pdfSRC={PDFURL} index={index} addPageToArray={addPageToArray} />)}
+      <input type="text" onChange={(e) => setNewFileName(e.target.value)} value={newFileName} />
       <button onClick={createNewPDF}>Split PDF</button>
     </>
   );

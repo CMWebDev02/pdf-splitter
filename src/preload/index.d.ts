@@ -5,7 +5,8 @@ declare global {
     electron: ElectronAPI;
     api: {
       splitPDF: (pdfFilePath: ArrayBuffer) => Promise<string[]>;
-      createNewPDF: (selectedPages: number[]) => void;
+      createNewPDF: (selectedPages: number[], saveFolderPath: string, newFileName: string, pdfFile: ArrayBuffer) => void;
+      getSaveLocation: () => Promise<string>;
     };
   }
 }
