@@ -29,13 +29,15 @@ export async function getPDFURIs(pdfFile: ArrayBuffer) {
 }
 
 export async function createNewPDF(selectedPages: number[], saveFolderPath: string, newFileName: string, pdfFile: ArrayBuffer) {
+  // Reads the initial pdf file and initializes a new file.
   const initialPDF = await PDFDocument.load(pdfFile);
   const newPDF = await PDFDocument.create();
 
+  // Copies the selected pages from the initial pdf file to the new pdf file and adds them to the new pdf file.
   const pagesToCopy = await newPDF.copyPages(initialPDF, selectedPages);
   pagesToCopy.forEach((copiedPage) => newPDF.addPage(copiedPage));
 
+  // Saves the new pdf file as an array buffer and writes the data to the file path created using the passed in savedFolderPath and newFileName variables.
   const savedPDFFile = await newPDF.save();
-
   await fs.writeFile(path.join(saveFolderPath, `${newFileName}.pdf`), savedPDFFile);
 }
