@@ -29,6 +29,12 @@ export function App(): JSX.Element {
     checkSaveLocation();
   }, []);
 
+  async function changeSavePath() {
+    const folders = await window.api.getDirectoryFolders("")
+
+    console.log(folders)
+  }
+
   async function loadDisplayPDF(e: ChangeEvent<HTMLInputElement>) {
     if (e.target !== null && e.target?.files !== null) {
       setPDFFile(e.target.files[0]);
@@ -65,7 +71,7 @@ export function App(): JSX.Element {
     <>
       <h1>PDF Splitter</h1>
       <h2>SaveFolder: {saveFolderPath}</h2>
-      <button>Change Folder</button>
+      <button onClick={changeSavePath}>Change Folder</button>
       <PDFFileSelector labelText={'Choose PDF File:'} setFile={loadDisplayPDF} currentFile={pdfFile} />
       <h2>Selected Pages: {selectedPageArray}</h2>
       <LabeledInput setValue={setNewFileName} currentValue={newFileName} labelText='New File Name' />
