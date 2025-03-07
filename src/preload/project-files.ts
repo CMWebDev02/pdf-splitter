@@ -5,14 +5,16 @@ import path from 'path';
 const userHomeDir = os.homedir();
 
 type SaveFileData = {
-  "save-location": string;
-}
+  'save-location': string;
+};
 
 const saveFileLocation = path.join(userHomeDir, 'pdf-splitter', 'save-location.json');
 
-const initialSaveFileData = {
-  'save-location': ''
-};
+function getNewSaveFileData() {
+  return {
+    'save-location': ''
+  };
+}
 
 async function validateSaveLocationFile() {
   try {
@@ -32,12 +34,12 @@ async function validateDirectory(dirPath: string) {
   }
 }
 
-export async function initializeSaveLocationFile() {
+async function initializeSaveLocationFile() {
   try {
     const directoryPath = path.dirname(saveFileLocation);
     const doesDirExist = await validateDirectory(directoryPath);
     if (!doesDirExist) await fs.mkdir(directoryPath);
-    await fs.writeFile(saveFileLocation, JSON.stringify(initialSaveFileData));
+    await fs.writeFile(saveFileLocation, JSON.stringify(getNewSaveFileData()));
   } catch (error) {
     console.error(error);
   }
@@ -73,14 +75,23 @@ export async function getSaveFolderLocation() {
   try {
     const doesFileExist = await checkSaveLocationFile();
 
-    if (!doesFileExist) return "";
+    if (!doesFileExist) return '';
 
     const saveFileData = await fs.readFile(saveFileLocation, 'utf-8');
     const saveFileJSON: SaveFileData = JSON.parse(saveFileData);
 
-    return saveFileJSON["save-location"];
+    return saveFileJSON['save-location'];
   } catch (error) {
     console.error(error);
-    return "";
+    return '';
   }
+}
+
+export async function updateSaveFolderLocation(newDirectoryPath: string) {
+  try {
+    const newSaveData = getNewSaveFileData();
+    newSaveData['save-location'] = newDirectoryPath;
+
+    await fs.writeFile(saveFileLocation, JSON.stringify(newSaveData));
+  } catch (error) {}
 }

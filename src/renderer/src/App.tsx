@@ -3,9 +3,10 @@ import type { ChangeEvent } from 'react';
 import { EmbeddedPDF } from './components/embedded-pdf';
 import PDFFileSelector from './components/pdf-file-selector';
 import LabeledInput from './components/labeled-input';
+import SaveFolder from './components/save-folder';
 
-// Plan for folder selector, start from user's folder and then allow them to 
-// make an html "directory looking thing" and give links to every file. 
+// Plan for folder selector, start from user's folder and then allow them to
+// make an html "directory looking thing" and give links to every file.
 
 export function App(): JSX.Element {
   // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
@@ -19,6 +20,12 @@ export function App(): JSX.Element {
 
   const [saveFolderPath, setSaveFolderPath] = useState<string>('');
 
+  const [isModalShown, setIsModalShown] = useState<boolean>(false);
+
+  function toggleModal() {
+    setIsModalShown(!isModalShown);
+  }
+
   useEffect(() => {
     async function checkSaveLocation() {
       const folderPath = await window.api.getSaveLocation();
@@ -28,12 +35,6 @@ export function App(): JSX.Element {
 
     checkSaveLocation();
   }, []);
-
-  async function changeSavePath() {
-    const folders = await window.api.getDirectoryFolders("")
-
-    console.log(folders)
-  }
 
   async function loadDisplayPDF(e: ChangeEvent<HTMLInputElement>) {
     if (e.target !== null && e.target?.files !== null) {
@@ -70,11 +71,11 @@ export function App(): JSX.Element {
   return (
     <>
       <h1>PDF Splitter</h1>
-      <h2>SaveFolder: {saveFolderPath}</h2>
-      <button onClick={changeSavePath}>Change Folder</button>
+
+      <SaveFolder setSaveFolderPath={setSaveFolderPath} saveFolderPath={saveFolderPath} isModalShown={isModalShown} toggleModal={toggleModal} />
       <PDFFileSelector labelText={'Choose PDF File:'} setFile={loadDisplayPDF} currentFile={pdfFile} />
       <h2>Selected Pages: {selectedPageArray}</h2>
-      <LabeledInput setValue={setNewFileName} currentValue={newFileName} labelText='New File Name' />
+      <LabeledInput setValue={setNewFileName} currentValue={newFileName} labelText="New File Name" />
       <button onClick={createNewPDF}>Split PDF</button>
       <hr />
       {PDFURLsArray.length !== 0 && PDFURLsArray.map((PDFURL, index) => <EmbeddedPDF key={`pdf-page-${index}`} pdfSRC={PDFURL} index={index} addPageToArray={addPageToArray} />)}

@@ -1,15 +1,20 @@
 import { contextBridge } from 'electron';
 import { electronAPI } from '@electron-toolkit/preload';
 import { createNewPDF, getPDFURIs } from './pdf';
-import { getSaveFolderLocation } from './project-files';
+import { getSaveFolderLocation, updateSaveFolderLocation } from './project-files';
 import { getFolders } from './file-system';
+import { getUserHomeDir, joinPaths, parentPath } from './utils';
 
 // Custom APIs for renderer
 const api = {
   splitPDF: getPDFURIs,
   createNewPDF: createNewPDF,
   getSaveLocation: getSaveFolderLocation,
+  updateSaveLocation: updateSaveFolderLocation,
   getDirectoryFolders: getFolders,
+  joinPaths: joinPaths,
+  parentPath: parentPath,
+  getUserHomeDir: getUserHomeDir
 };
 
 // Use `contextBridge` APIs to expose Electron APIs to
