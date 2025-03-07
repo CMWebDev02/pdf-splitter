@@ -1,0 +1,17 @@
+.mainContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.mainContainer > h2 {
+  width: 30%;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+}
+
+.mainContainer > p {
+  border: 1px solid var(--main-text-color);
+  width: 70%;
+  padding: 2px;
+  height: 1.5rem;
+}

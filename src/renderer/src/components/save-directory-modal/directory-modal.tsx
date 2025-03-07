@@ -1,6 +1,8 @@
 import type { Dirent } from 'fs';
 import DirectoryOption from './directory-option';
 
+import styles from './styles/directory-modal.module.css';
+
 interface DirectoryModalProps {
   directories: Dirent[];
   getDirectories: (directoryPaths: string) => void;
@@ -21,13 +23,19 @@ export default function DirectoryModal({ directories, getDirectories, updateSave
   };
 
   return (
-    <div>
-      <div>
-        <button onClick={displayParentDirectory}>Return</button>
+    <div className={styles.directoryModal}>
+      <div className={styles.modalHeader}>
+        <button onClick={updateSaveFolderPath} className="interfaceButton">
+          Save
+        </button>
         <h2>{currentDirectoryPath}</h2>
-        <button onClick={updateSaveFolderPath}>Save Folder Path</button>
+        <button onClick={displayParentDirectory} className="interfaceButton">
+          Return
+        </button>
       </div>
-      <RenderDirectories />
+      <div className={styles.directoryOptionsDiv}>
+        <RenderDirectories />
+      </div>
     </div>
   );
 }

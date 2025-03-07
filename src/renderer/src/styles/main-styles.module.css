@@ -1,0 +1,45 @@
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+
+  padding: var(--base-padding);
+  height: 3rem;
+
+  color: var(--main-text-color);
+  background-color: var(--secondary-background-color);
+  border-bottom: 2px solid var(--main-text-color);
+}
+
+.headerContainer > h1 {
+  font-size: clamp(1.5rem, 2vw, 2rem);
+}
+
+.mainContainer {
+  display: flex;
+  width: 100%;
+  height: calc(100% - 3rem);
+}
+
+.userControlsContainer {
+  width: 20%;
+  padding: var(--base-padding);
+
+  background-color: var(--secondary-background-color);
+  border-right: 2px solid var(--main-text-color);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.userControlsContainer > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.pdfDisplayContainer {
+  padding: var(--base-padding);
+  width: 80%;
+  overflow-y: auto;
+}

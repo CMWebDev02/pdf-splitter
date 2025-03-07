@@ -1,5 +1,7 @@
 import type { ChangeEvent } from 'react';
 
+import styles from './styles/pdf-file-selector.module.css';
+
 interface PDFFileSelectorProps {
   labelText: string;
   setFile: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -7,10 +9,12 @@ interface PDFFileSelectorProps {
 }
 
 export default function PDFFileSelector({ labelText, setFile, currentFile }: PDFFileSelectorProps) {
-
   return (
-    <div>
-      <h2>Selected PDF File: {currentFile !== null && currentFile?.name}</h2>
+    <div className={styles.mainContainer}>
+      <div>
+        <h2>Selected File:</h2>
+        <p>{currentFile !== null && currentFile?.name}</p>
+      </div>
       <input type="file" id={`${labelText}-input`} onChange={setFile} accept="application/pdf" />
     </div>
   );

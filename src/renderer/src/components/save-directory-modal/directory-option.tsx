@@ -4,6 +4,8 @@ interface DirectoryOptionProps {
   getDirectories: (directoryPath: string) => void;
 }
 
+import styles from './styles/directory-options.module.css';
+
 export default function DirectoryOption({ directoryName, directoryPath, getDirectories }: DirectoryOptionProps) {
   function updateCurrentDisplayDirectory() {
     const newDirectory = window.api.joinPaths([directoryPath, directoryName]);
@@ -11,9 +13,11 @@ export default function DirectoryOption({ directoryName, directoryPath, getDirec
   }
 
   return (
-    <div>
+    <div className={styles.directoryOptionDiv}>
       <p>{directoryName}</p>
-      <button onClick={updateCurrentDisplayDirectory}>{'->'}</button>
+      <button onClick={updateCurrentDisplayDirectory} className="interfaceButton">
+        {'->'}
+      </button>
     </div>
   );
 }

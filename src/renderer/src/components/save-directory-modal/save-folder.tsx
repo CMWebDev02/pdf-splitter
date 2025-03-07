@@ -2,6 +2,8 @@ import { useState, type Dispatch } from 'react';
 import DirectoryModal from './directory-modal';
 import type { Dirent } from 'fs';
 
+import styles from './styles/save-folder.module.css';
+
 interface SaveFolderProps {
   saveFolderPath: string;
   setSaveFolderPath: Dispatch<string>;
@@ -39,8 +41,10 @@ export default function SaveFolder({ saveFolderPath, setSaveFolderPath, isModalS
 
   return (
     <>
-      <h2>SaveFolder: {saveFolderPath}</h2>
-      <button onClick={displayDirectoryModal}>Change Folder</button>
+      <div className={styles.saveFolderDisplayDiv}>
+        <h2 onClick={displayDirectoryModal}>SaveFolder:</h2>
+        <p>{saveFolderPath}</p>
+      </div>
 
       {isModalShown && <DirectoryModal directories={directoryObjArray} getDirectories={getDirectories} updateSaveFolderPath={updateSaveFolderPath} displayParentDirectory={displayParentDirectory} currentDirectoryPath={currentDirectoryPath} />}
     </>

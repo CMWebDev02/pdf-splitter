@@ -1,0 +1,14 @@
+.directoryOptionDiv {
+  color: var(--secondary-text-color);
+  border: 2px solid var(--accent-color-one);
+  padding: var(--base-padding);
+
+  display: flex;
+  justify-content: space-between;
+
+  width: 40%;
+}
+
+.directoryOptionDiv > p {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+}

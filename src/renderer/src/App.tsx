@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import { EmbeddedPDF } from './components/embedded-pdf';
-import PDFFileSelector from './components/pdf-file-selector';
-import LabeledInput from './components/labeled-input';
-import SaveFolder from './components/save-folder';
+import PDFFileSelector from './components/user-controls/pdf-file-selector';
+import LabeledInput from './components/user-controls/labeled-input';
+import SaveFolder from './components/save-directory-modal/save-folder';
 
-// Plan for folder selector, start from user's folder and then allow them to
-// make an html "directory looking thing" and give links to every file.
+import './styles.css';
+
+import styles from './styles/main-styles.module.css';
+import PageSelectionDisplay from './components/user-controls/page-selection-display';
 
 export function App(): JSX.Element {
   // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
@@ -70,15 +72,25 @@ export function App(): JSX.Element {
 
   return (
     <>
-      <h1>PDF Splitter</h1>
-
-      <SaveFolder setSaveFolderPath={setSaveFolderPath} saveFolderPath={saveFolderPath} isModalShown={isModalShown} toggleModal={toggleModal} />
-      <PDFFileSelector labelText={'Choose PDF File:'} setFile={loadDisplayPDF} currentFile={pdfFile} />
-      <h2>Selected Pages: {selectedPageArray}</h2>
-      <LabeledInput setValue={setNewFileName} currentValue={newFileName} labelText="New File Name" />
-      <button onClick={createNewPDF}>Split PDF</button>
-      <hr />
-      {PDFURLsArray.length !== 0 && PDFURLsArray.map((PDFURL, index) => <EmbeddedPDF key={`pdf-page-${index}`} pdfSRC={PDFURL} index={index} addPageToArray={addPageToArray} />)}
+      <header className={styles.headerContainer}>
+        <h1>PDF Splitter</h1>
+        <SaveFolder setSaveFolderPath={setSaveFolderPath} saveFolderPath={saveFolderPath} isModalShown={isModalShown} toggleModal={toggleModal} />
+      </header>
+      <main className={styles.mainContainer}>
+        <div className={styles.userControlsContainer}>
+          <div>
+            <PDFFileSelector labelText={'Choose PDF File:'} setFile={loadDisplayPDF} currentFile={pdfFile} />
+            <PageSelectionDisplay selectedPageArray={selectedPageArray} />
+          </div>
+          <div>
+            <LabeledInput setValue={setNewFileName} currentValue={newFileName} labelText="File Name" />
+            <button onClick={createNewPDF} className="interfaceButton">
+              Split PDF
+            </button>
+          </div>
+        </div>
+        <div className={styles.pdfDisplayContainer}>{PDFURLsArray.length !== 0 && PDFURLsArray.map((PDFURL, index) => <EmbeddedPDF key={`pdf-page-${index}`} pdfSRC={PDFURL} index={index} addPageToArray={addPageToArray} />)}</div>
+      </main>
     </>
   );
 }

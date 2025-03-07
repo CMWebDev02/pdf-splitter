@@ -1,0 +1,10 @@
+.inputContainer {
+  width: 100%;
+  height: 1.25rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.inputContainer > label {
+  font-size: 1rem;
+}
