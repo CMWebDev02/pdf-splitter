@@ -21,7 +21,7 @@
 }
 
 .userControlsContainer {
-  width: 20%;
+  width: 30%;
   padding: var(--base-padding);
 
   background-color: var(--secondary-background-color);

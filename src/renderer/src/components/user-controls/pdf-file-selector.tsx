@@ -11,7 +11,7 @@ interface PDFFileSelectorProps {
 export default function PDFFileSelector({ labelText, setFile, currentFile }: PDFFileSelectorProps) {
   return (
     <div className={styles.mainContainer}>
-      <div>
+      <div className={styles.fileDisplayContainer}>
         <h2>Selected File:</h2>
         <p>{currentFile !== null && currentFile?.name}</p>
       </div>
