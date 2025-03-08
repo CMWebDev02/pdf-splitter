@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';
-import { EmbeddedPDF } from './components/embedded-pdf';
+import { EmbeddedPDF } from './components/pdf-display/embedded-pdf';
 import PDFFileSelector from './components/user-controls/pdf-file-selector';
 import LabeledInput from './components/user-controls/labeled-input';
 import SaveFolder from './components/save-directory-modal/save-folder';
