@@ -18,9 +18,21 @@
   scrollbar-color: var(--accent-color-one) var(--secondary-background-color);
 }
 
-#root {
+html {
   height: 100vh;
   width: 100vw;
+  min-width: 530px;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  min-width: max-content;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
 
   background-color: var(--main-background-color);
   color: var(--main-text-color);
