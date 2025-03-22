@@ -10,10 +10,13 @@ import './styles.css';
 import styles from './styles/main-styles.module.css';
 import PageSelectionDisplay from './components/user-controls/page-selection-display';
 import { ViewCheckBox } from './components/user-controls/view-checkbox';
+import { PDFDisplayContainer } from './components/pdf-display/pdf-display-container';
 
 export function App(): JSX.Element {
   // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
   const [PDFURLsArray, setPDFURLsArray] = useState<string[]>([]);
+
+  const [hiddenPages, setHiddenPages] = useState<number[]>([]);
 
   const [selectedPageArray, setSelectedPageArray] = useState<number[]>([]);
 
@@ -49,6 +52,8 @@ export function App(): JSX.Element {
       const pdfURIs = await window.api.splitPDF(pdfArrayBuffer);
 
       setPDFURLsArray(pdfURIs);
+      setSelectedPageArray([]);
+      setHiddenPages([]);
     }
   }
 
@@ -69,8 +74,26 @@ export function App(): JSX.Element {
 
     if (pdfFile !== null) {
       const pdfFileArrayBuffer = await pdfFile.arrayBuffer();
-      window.api.createNewPDF(selectedPageArray, saveFolderPath, newFileName, pdfFileArrayBuffer);
+      const isFileCreated = window.api.createNewPDF(selectedPageArray, saveFolderPath, newFileName, pdfFileArrayBuffer);
+      setHiddenPages((prevArray) => {
+        let newArray: number[] = [...prevArray];
+        for (const page of selectedPageArray) {
+          if (!prevArray.includes(page)) {
+            newArray.push(page);
+          }
+        }
+        return newArray.sort((a, b) => a - b);
+      });
+      setSelectedPageArray([]);
+
+      if (isFileCreated) alert('File Created');
     }
+  }
+
+  function showHiddenPages() {
+    const userChoice = confirm('Show all hidden pages?');
+
+    if (userChoice) setHiddenPages([]);
   }
 
   return (
@@ -87,6 +110,9 @@ export function App(): JSX.Element {
           <div>
             <PDFFileSelector labelText={'Choose PDF File:'} setFile={loadDisplayPDF} currentFile={pdfFile} />
             <PageSelectionDisplay selectedPageArray={selectedPageArray} />
+            <button className="interfaceButton" onClick={showHiddenPages}>
+              Show Hidden Pages
+            </button>
           </div>
           <div>
             <LabeledInput setValue={setNewFileName} currentValue={newFileName} labelText="File Name" />
@@ -95,7 +121,7 @@ export function App(): JSX.Element {
             </button>
           </div>
         </div>
-        <div className={`${isViewTwoPages ? styles.twoPageView : styles.onePageView} ${styles.pdfDisplayContainer}`}>{PDFURLsArray.length !== 0 && PDFURLsArray.map((PDFURL, index) => <EmbeddedPDF key={`pdf-page-${index}`} pdfSRC={PDFURL} index={index} addPageToArray={addPageToArray} isViewTwoPages={isViewTwoPages} />)}</div>
+        <PDFDisplayContainer PDFURLsArray={PDFURLsArray} isViewTwoPages={isViewTwoPages} addPageToArray={addPageToArray} hiddenPagesArray={hiddenPages} />
       </main>
     </>
   );

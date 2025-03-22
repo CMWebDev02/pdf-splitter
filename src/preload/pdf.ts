@@ -90,7 +90,9 @@ export async function createNewPDF(selectedPages: number[], saveFolderPath: stri
     const finalFileName = await validateFileName(saveFolderPath, `${newFileName}.pdf`);
     if (finalFileName === '') throw new Error('File name invalid.');
     await fs.writeFile(path.join(saveFolderPath, `${finalFileName}`), savedPDFFile);
+    return true;
   } catch (error) {
     console.log(error);
+    return false;
   }
 }
