@@ -22,6 +22,12 @@
   padding: var(--base-padding);
 
   font-size: x-large;
+  text-shadow:
+  0 0 3px var(--main-text-color),
+  0 0 3px var(--main-text-color),
+  0 0 3px var(--main-text-color),
+  0 0 3px var(--main-text-color);
+
   user-select: none;
 }
 
@@ -31,9 +37,4 @@
 
 .unselectedDiv {
   color: var(--main-background-color);
-  text-shadow:
-    0 0 3px var(--main-text-color),
-    0 0 3px var(--main-text-color),
-    0 0 3px var(--main-text-color),
-    0 0 3px var(--main-text-color);
 }
