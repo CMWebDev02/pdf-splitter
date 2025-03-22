@@ -9,6 +9,7 @@ import './styles.css';
 
 import styles from './styles/main-styles.module.css';
 import PageSelectionDisplay from './components/user-controls/page-selection-display';
+import { ViewCheckBox } from './components/user-controls/view-checkbox';
 
 export function App(): JSX.Element {
   // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
@@ -23,6 +24,8 @@ export function App(): JSX.Element {
   const [saveFolderPath, setSaveFolderPath] = useState<string>('');
 
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
+
+  const [ isViewTwoPages, setIsViewTwoPages ] = useState<boolean>(false);
 
   function toggleModal() {
     setIsModalShown(!isModalShown);
@@ -74,7 +77,10 @@ export function App(): JSX.Element {
     <>
       <header className={styles.headerContainer}>
         <h1>PDF Splitter</h1>
-        <SaveFolder setSaveFolderPath={setSaveFolderPath} saveFolderPath={saveFolderPath} isModalShown={isModalShown} toggleModal={toggleModal} />
+        <div className={styles.innerHeaderContainer}>
+          <ViewCheckBox alterView={setIsViewTwoPages} />
+          <SaveFolder setSaveFolderPath={setSaveFolderPath} saveFolderPath={saveFolderPath} isModalShown={isModalShown} toggleModal={toggleModal} />
+        </div>
       </header>
       <main className={styles.mainContainer}>
         <div className={styles.userControlsContainer}>
@@ -89,7 +95,7 @@ export function App(): JSX.Element {
             </button>
           </div>
         </div>
-        <div className={styles.pdfDisplayContainer}>{PDFURLsArray.length !== 0 && PDFURLsArray.map((PDFURL, index) => <EmbeddedPDF key={`pdf-page-${index}`} pdfSRC={PDFURL} index={index} addPageToArray={addPageToArray} />)}</div>
+        <div className={`${isViewTwoPages ? styles.twoPageView : styles.onePageView} ${styles.pdfDisplayContainer}`}>{PDFURLsArray.length !== 0 && PDFURLsArray.map((PDFURL, index) => <EmbeddedPDF key={`pdf-page-${index}`} pdfSRC={PDFURL} index={index} addPageToArray={addPageToArray} isViewTwoPages={isViewTwoPages} />)}</div>
       </main>
     </>
   );

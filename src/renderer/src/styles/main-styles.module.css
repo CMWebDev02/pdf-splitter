@@ -14,6 +14,11 @@
   font-size: clamp(1.5rem, 2vw, 2rem);
 }
 
+.innerHeaderContainer {
+  display: flex;
+  gap: 5px;
+}
+
 .mainContainer {
   display: flex;
   width: 100%;
@@ -41,5 +46,20 @@
 .pdfDisplayContainer {
   padding: var(--base-padding);
   width: 80%;
+  height: 100%;
   overflow-y: auto;
+  display: flex;
+}
+
+.onePageView {
+  flex-direction: column;
+  align-items: center;
+}
+
+.twoPageView {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: start;
+  gap: 2%;
 }

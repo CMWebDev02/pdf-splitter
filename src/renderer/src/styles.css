@@ -70,9 +70,9 @@ body {
 }
 
 iframe {
-  display: block; 
+  display: block;
   background: #000;
-  border: none; 
+  border: none;
   height: 75vh;
   width: 80vw;
 }

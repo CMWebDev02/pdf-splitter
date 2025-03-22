@@ -1,16 +1,20 @@
 .mainContainer {
+  min-height: 100%;
   height: 100%;
-  width: 80%;
   position: relative;
+}
+
+.onePageView {
+  width: 90%;
+}
+
+.twoPageView {
+  width: 48%;
 }
 
 .pdfPage {
   height: 100%;
   width: 100%;
-}
-
-.pdfPage #document {
-  overflow: hidden;
 }
 
 .interactiveDiv {
@@ -23,10 +27,10 @@
 
   font-size: x-large;
   text-shadow:
-  0 0 3px var(--main-text-color),
-  0 0 3px var(--main-text-color),
-  0 0 3px var(--main-text-color),
-  0 0 3px var(--main-text-color);
+    0 0 3px var(--main-text-color),
+    0 0 3px var(--main-text-color),
+    0 0 3px var(--main-text-color),
+    0 0 3px var(--main-text-color);
 
   user-select: none;
 }

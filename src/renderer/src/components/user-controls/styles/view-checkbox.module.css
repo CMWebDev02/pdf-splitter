@@ -1,0 +1,11 @@
+.mainDiv {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    justify-self: flex-end;
+}
+
+.mainDiv > label {
+    user-select: none;
+}
