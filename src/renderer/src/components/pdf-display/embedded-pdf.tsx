@@ -7,6 +7,8 @@ interface EmbeddedPDFProps {
 }
 
 export function EmbeddedPDF({ pdfSRC, index, addPageToArray }: EmbeddedPDFProps) {
+
+
   function handleClick() {
     addPageToArray(index);
   }
@@ -14,7 +16,7 @@ export function EmbeddedPDF({ pdfSRC, index, addPageToArray }: EmbeddedPDFProps)
   return (
     <div className={styles.mainContainer}>
       <iframe src={`${pdfSRC}#toolbar=0`} className={styles.pdfPage} />
-      <button onClick={handleClick}>Page#{index}</button>
+      <div onClick={handleClick} className={`${styles.interactiveDiv} ${styles.unselectedDiv}`}>{index + 1}</div>
     </div>
   );
 }

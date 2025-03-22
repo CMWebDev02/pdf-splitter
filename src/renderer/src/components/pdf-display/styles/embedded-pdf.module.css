@@ -1,9 +1,39 @@
 .mainContainer {
-    height: 100%;
-    width: 80%;
+  height: 100%;
+  width: 80%;
+  position: relative;
 }
 
 .pdfPage {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
+}
+
+.pdfPage #document {
+  overflow: hidden;
+}
+
+.interactiveDiv {
+  height: 98%;
+  width: 98%;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  padding: var(--base-padding);
+
+  font-size: x-large;
+  user-select: none;
+}
+
+.selectedDiv {
+  color: red;
+}
+
+.unselectedDiv {
+  color: var(--main-background-color);
+  text-shadow:
+    0 0 3px var(--main-text-color),
+    0 0 3px var(--main-text-color),
+    0 0 3px var(--main-text-color),
+    0 0 3px var(--main-text-color);
 }

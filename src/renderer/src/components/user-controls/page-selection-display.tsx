@@ -5,7 +5,7 @@ interface PageSelectionDisplayProps {
 }
 
 export default function PageSelectionDisplay({ selectedPageArray }: PageSelectionDisplayProps) {
-  const pagesString = selectedPageArray.join(' ');
+  const pagesString = selectedPageArray.map(page => page + 1).join(' ');
 
   return (
     <div className={styles.mainContainer}>
