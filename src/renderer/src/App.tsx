@@ -25,7 +25,7 @@ export function App(): JSX.Element {
 
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
 
-  const [ isViewTwoPages, setIsViewTwoPages ] = useState<boolean>(false);
+  const [isViewTwoPages, setIsViewTwoPages] = useState<boolean>(false);
 
   function toggleModal() {
     setIsModalShown(!isModalShown);
