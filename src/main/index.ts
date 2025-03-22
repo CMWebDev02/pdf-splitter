@@ -23,7 +23,7 @@ function createWindow(): void {
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
     // Opens dev tools upon launching the app, for troubleshooting purposes.
-    mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
