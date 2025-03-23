@@ -10,6 +10,7 @@ import styles from './styles/main-styles.module.css';
 import PageSelectionDisplay from './components/user-controls/page-selection-display';
 import { ViewCheckBox } from './components/user-controls/view-checkbox';
 import { PDFDisplayContainer } from './components/pdf-display/pdf-display-container';
+import { SaveFolderLocation } from './utils/local-storage';
 
 export function App(): JSX.Element {
   // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
@@ -23,7 +24,7 @@ export function App(): JSX.Element {
 
   const [newFileName, setNewFileName] = useState<string>('');
 
-  const [saveFolderPath, setSaveFolderPath] = useState<string>('');
+  const [saveFolderPath, setSaveFolderPath] = useState<string>(SaveFolderLocation.retrieveValue());
 
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
 
@@ -34,14 +35,8 @@ export function App(): JSX.Element {
   }
 
   useEffect(() => {
-    async function checkSaveLocation() {
-      const folderPath = await window.api.getSaveLocation();
-
-      setSaveFolderPath(folderPath);
-    }
-
-    checkSaveLocation();
-  }, []);
+    SaveFolderLocation.setValue(saveFolderPath);
+  }, [saveFolderPath]);
 
   async function loadDisplayPDF(e: ChangeEvent<HTMLInputElement>) {
     if (e.target !== null && e.target?.files !== null) {
@@ -83,9 +78,12 @@ export function App(): JSX.Element {
         }
         return newArray.sort((a, b) => a - b);
       });
-      setSelectedPageArray([]);
 
-      if (isFileCreated) alert('File Created');
+      if (isFileCreated) {
+        alert('File Created');
+        setSelectedPageArray([]);
+        setNewFileName('');
+      }
     }
   }
 

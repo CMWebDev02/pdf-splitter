@@ -6,8 +6,7 @@ declare global {
     api: {
       splitPDF: (pdfFilePath: ArrayBuffer) => Promise<string[]>;
       createNewPDF: (selectedPages: number[], saveFolderPath: string, newFileName: string, pdfFile: ArrayBuffer) => boolean;
-      getSaveLocation: () => Promise<string>;
-      updateSaveLocation: (newDirectoryPath: string) => void;
+      getHomeDirectory: () => string;
       getDirectoryFolders: (dirPath: string) => Promise<Dirent[]>;
       joinPaths: (pathsArr: string[]) => string;
       parentPath: (pathString: string) => string;
