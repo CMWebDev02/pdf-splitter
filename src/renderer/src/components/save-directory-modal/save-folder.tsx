@@ -17,7 +17,6 @@ export default function SaveFolder({ saveFolderPath, setSaveFolderPath, isModalS
 
   function updateSaveFolderPath() {
     setSaveFolderPath(currentDirectoryPath);
-    window.api.updateSaveLocation(currentDirectoryPath);
     toggleModal();
   }
 
