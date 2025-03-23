@@ -8,9 +8,10 @@ import './styles.css';
 
 import styles from './styles/main-styles.module.css';
 import PageSelectionDisplay from './components/user-controls/page-selection-display';
-import { ViewCheckBox } from './components/user-controls/view-checkbox';
+import { LabeledCheckBox } from './components/user-controls/labeled-checkbox';
 import { PDFDisplayContainer } from './components/pdf-display/pdf-display-container';
 import { SaveFolderLocation } from './utils/local-storage';
+import { PopUpContainer } from './components/pop-ups/pop-up-container';
 
 export function App(): JSX.Element {
   // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
@@ -30,6 +31,10 @@ export function App(): JSX.Element {
 
   const [isViewTwoPages, setIsViewTwoPages] = useState<boolean>(false);
 
+  const [arePagesHidden, setArePagesHidden] = useState<boolean>(false);
+
+  const [currentPopUps, setCurrentPopUps] = useState<PopUpObject[]>([]);
+
   function toggleModal() {
     setIsModalShown(!isModalShown);
   }
@@ -37,6 +42,12 @@ export function App(): JSX.Element {
   useEffect(() => {
     SaveFolderLocation.setValue(saveFolderPath);
   }, [saveFolderPath]);
+
+  useEffect(() => {
+    if (currentPopUps.length > 10) {
+      setCurrentPopUps((prevArray) => prevArray.slice(0, 10));
+    }
+  }, [currentPopUps]);
 
   async function loadDisplayPDF(e: ChangeEvent<HTMLInputElement>) {
     if (e.target !== null && e.target?.files !== null) {
@@ -63,9 +74,28 @@ export function App(): JSX.Element {
     });
   }
 
-  async function createNewPDF() {
-    if (selectedPageArray.length <= 0 || newFileName == '') return;
+  function checkForFileCreation() {
+    let errorMessage = '';
+    if (pdfFile === null) {
+      errorMessage = 'First Select a Valid PDF File!';
+    } else if (selectedPageArray.length <= 0) {
+      errorMessage = 'Select A Page First!';
+    } else if (newFileName == '') {
+      errorMessage = 'Enter A Valid File Name!';
+    }
 
+    if (errorMessage !== '') {
+      setCurrentPopUps((prevArray) => {
+        const newMessage: PopUpObject = { success: false, message: errorMessage, time: Date.now() };
+        return [newMessage, ...prevArray];
+      });
+      return;
+    } else {
+      createNewFile();
+    }
+  }
+
+  async function createNewFile() {
     if (pdfFile !== null) {
       const pdfFileArrayBuffer = await pdfFile.arrayBuffer();
       const isFileCreated = window.api.createNewPDF(selectedPageArray, saveFolderPath, newFileName, pdfFileArrayBuffer);
@@ -80,17 +110,14 @@ export function App(): JSX.Element {
       });
 
       if (isFileCreated) {
-        alert('File Created');
+        setCurrentPopUps((prevArray) => {
+          const newMessage: PopUpObject = { success: true, message: `File ${newFileName}.pdf Created.`, time: Date.now() };
+          return [newMessage, ...prevArray];
+        });
         setSelectedPageArray([]);
         setNewFileName('');
       }
     }
-  }
-
-  function showHiddenPages() {
-    const userChoice = confirm('Show all hidden pages?');
-
-    if (userChoice) setHiddenPages([]);
   }
 
   return (
@@ -98,7 +125,8 @@ export function App(): JSX.Element {
       <header className={styles.headerContainer}>
         <h1>PDF Splitter</h1>
         <div className={styles.innerHeaderContainer}>
-          <ViewCheckBox alterView={setIsViewTwoPages} />
+          <LabeledCheckBox alterValue={setArePagesHidden} labelText="Hide Pages" />
+          <LabeledCheckBox alterValue={setIsViewTwoPages} labelText="Two Pages" />
           <SaveFolder setSaveFolderPath={setSaveFolderPath} saveFolderPath={saveFolderPath} isModalShown={isModalShown} toggleModal={toggleModal} />
         </div>
       </header>
@@ -107,18 +135,16 @@ export function App(): JSX.Element {
           <div>
             <PDFFileSelector labelText={'Choose PDF File:'} setFile={loadDisplayPDF} currentFile={pdfFile} />
             <PageSelectionDisplay selectedPageArray={selectedPageArray} />
-            <button className="interfaceButton" onClick={showHiddenPages}>
-              Show Hidden Pages
-            </button>
           </div>
           <div>
             <LabeledInput setValue={setNewFileName} currentValue={newFileName} labelText="File Name" />
-            <button onClick={createNewPDF} className="interfaceButton">
+            <button onClick={checkForFileCreation} className="interfaceButton">
               Split PDF
             </button>
           </div>
+          <PopUpContainer popUpsArray={currentPopUps} />
         </div>
-        <PDFDisplayContainer PDFURLsArray={PDFURLsArray} isViewTwoPages={isViewTwoPages} addPageToArray={addPageToArray} hiddenPagesArray={hiddenPages} />
+        <PDFDisplayContainer PDFURLsArray={PDFURLsArray} isViewTwoPages={isViewTwoPages} addPageToArray={addPageToArray} hiddenPagesArray={hiddenPages} arePagesHidden={arePagesHidden} />
       </main>
     </>
   );
