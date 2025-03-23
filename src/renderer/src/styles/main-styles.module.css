@@ -42,3 +42,10 @@
   flex-direction: column;
   gap: 2rem;
 }
+
+.hiddenPageControls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 5px;
+}

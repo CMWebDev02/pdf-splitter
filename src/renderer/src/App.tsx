@@ -120,18 +120,42 @@ export function App(): JSX.Element {
     }
   }
 
+  function hidePages() {
+    setHiddenPages((prevArray) => {
+      let newArray: number[] = [...prevArray];
+      for (const page of selectedPageArray) {
+        if (!prevArray.includes(page)) {
+          newArray.push(page);
+        }
+      }
+      return newArray.sort((a, b) => a - b);
+    })
+    setSelectedPageArray([])
+    setCurrentPopUps((prevArray) => {
+      const newMessage: PopUpObject = { success: true, message: `Pages Hidden.`, time: Date.now() };
+      return [newMessage, ...prevArray];
+    });
+  }
+
   return (
     <>
       <header className={styles.headerContainer}>
         <h1>PDF Splitter</h1>
         <div className={styles.innerHeaderContainer}>
-          <LabeledCheckBox alterValue={setArePagesHidden} labelText="Hide Pages" />
           <LabeledCheckBox alterValue={setIsViewTwoPages} labelText="Two Pages" />
           <SaveFolder setSaveFolderPath={setSaveFolderPath} saveFolderPath={saveFolderPath} isModalShown={isModalShown} toggleModal={toggleModal} />
         </div>
       </header>
       <main className={styles.mainContainer}>
         <div className={styles.userControlsContainer}>
+          <div>
+            <div className={styles.hiddenPageControls}>
+              <button className="interfaceButton" onClick={hidePages}>
+                Hide Pages
+              </button>
+              <LabeledCheckBox alterValue={setArePagesHidden} labelText="Hide Pages" />
+            </div>
+          </div>
           <div>
             <PDFFileSelector labelText={'Choose PDF File:'} setFile={loadDisplayPDF} currentFile={pdfFile} />
             <PageSelectionDisplay selectedPageArray={selectedPageArray} />
