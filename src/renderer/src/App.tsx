@@ -137,6 +137,14 @@ export function App(): JSX.Element {
     });
   }
 
+  function resetHiddenPages() {
+    setHiddenPages([]);
+    setCurrentPopUps((prevArray) => {
+      const newMessage: PopUpObject = { success: true, message: `Pages Revealed.`, time: Date.now() };
+      return [newMessage, ...prevArray];
+    });
+  }
+
   return (
     <>
       <header className={styles.headerContainer}>
@@ -150,9 +158,14 @@ export function App(): JSX.Element {
         <div className={styles.userControlsContainer}>
           <div>
             <div className={styles.hiddenPageControls}>
-              <button className="interfaceButton" onClick={hidePages}>
-                Hide Pages
-              </button>
+              <div>
+                <button className="interfaceButton" onClick={resetHiddenPages}>
+                  Show All Pages
+                </button>
+                <button className="interfaceButton" onClick={hidePages}>
+                  Hide Pages
+                </button>
+              </div>
               <LabeledCheckBox alterValue={setArePagesHidden} labelText="Hide Pages" />
             </div>
           </div>

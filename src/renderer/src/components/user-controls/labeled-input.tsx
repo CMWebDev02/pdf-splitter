@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ChangeEvent, type Dispatch, type KeyboardEvent } from 'react';
+import { useEffect, useRef, type ChangeEvent, type Dispatch } from 'react';
 
 import styles from './styles/labeled-input.module.css';
 
@@ -13,7 +13,7 @@ export default function LabeledInput({ setValue, currentValue, labelText, trigge
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-      function activateShortCut(e: KeyboardEventInit) {
+      function activateShortCut(e: KeyboardEvent) {
         if (e.key === "t" && e.altKey) {
           gainFocus();
         } else if (e.key === "Enter") {

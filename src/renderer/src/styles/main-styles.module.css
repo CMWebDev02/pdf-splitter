@@ -45,7 +45,13 @@
 
 .hiddenPageControls {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.hiddenPageControls > div {
   gap: 5px;
+  display: flex;
+  justify-content: center;
 }
