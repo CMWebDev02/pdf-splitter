@@ -11,6 +11,7 @@ declare global {
       joinPaths: (pathsArr: string[]) => string;
       parentPath: (pathString: string) => string;
       getUserHomeDir: () => string;
+      getAllDrives: () => Promise<string[]>
     };
   }
 }

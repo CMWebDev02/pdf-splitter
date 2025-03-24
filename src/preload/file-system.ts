@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import os from 'os';
+import { getDiskInfo } from 'node-disk-info';
 
 const userHomeDir = os.homedir();
 
@@ -11,4 +12,14 @@ export async function getFolders(dirPath: string) {
 
 export function getHomeDir() {
   return userHomeDir;
+}
+
+export async function getAllDrives() {
+  try {
+    const allDrives = await getDiskInfo();
+    return allDrives.map(drive => drive.mounted);
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 }

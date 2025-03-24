@@ -2,6 +2,7 @@ import type { Dirent } from 'fs';
 import DirectoryOption from './directory-option';
 
 import styles from './styles/directory-modal.module.css';
+import { useEffect, useState } from 'react';
 
 interface DirectoryModalProps {
   directories: Dirent[];
@@ -12,6 +13,8 @@ interface DirectoryModalProps {
 }
 
 export default function DirectoryModal({ directories, getDirectories, updateSaveFolderPath, displayParentDirectory, currentDirectoryPath }: DirectoryModalProps) {
+  const [ drivesList, setDrivesList ] = useState<string[]>([]);
+
   const RenderDirectories = () => {
     return directories.length > 0 ? (
       directories.map((dirObj) => {
@@ -21,6 +24,15 @@ export default function DirectoryModal({ directories, getDirectories, updateSave
       <h2>No Directories To Display</h2>
     );
   };
+
+  useEffect(() => {
+    async function getDrives() {
+      const drives = await window.api.getAllDrives();
+      setDrivesList(drives)
+    }
+
+    getDrives();
+  }, [])
 
   return (
     <div className={styles.directoryModal}>
@@ -35,6 +47,7 @@ export default function DirectoryModal({ directories, getDirectories, updateSave
       </div>
       <div className={styles.directoryOptionsDiv}>
         <RenderDirectories />
+        {drivesList.map(letter => <h2>{letter}</h2>)}
       </div>
     </div>
   );
