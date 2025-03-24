@@ -129,8 +129,8 @@ export function App(): JSX.Element {
         }
       }
       return newArray.sort((a, b) => a - b);
-    })
-    setSelectedPageArray([])
+    });
+    setSelectedPageArray([]);
     setCurrentPopUps((prevArray) => {
       const newMessage: PopUpObject = { success: true, message: `Pages Hidden.`, time: Date.now() };
       return [newMessage, ...prevArray];
@@ -161,7 +161,7 @@ export function App(): JSX.Element {
             <PageSelectionDisplay selectedPageArray={selectedPageArray} />
           </div>
           <div>
-            <LabeledInput setValue={setNewFileName} currentValue={newFileName} labelText="File Name" />
+            <LabeledInput setValue={setNewFileName} currentValue={newFileName} labelText="File Name" triggerFileCreation={checkForFileCreation} />
             <button onClick={checkForFileCreation} className="interfaceButton">
               Split PDF
             </button>

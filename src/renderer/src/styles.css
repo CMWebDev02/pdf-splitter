@@ -27,7 +27,6 @@ html {
 body {
   height: 100%;
   width: 100%;
-  min-width: max-content;
 }
 
 #root {
@@ -73,6 +72,6 @@ iframe {
   display: block;
   background: #000;
   border: none;
-  height: 75vh;
-  width: 80vw;
+  height: 100%;
+  width: 100%;
 }

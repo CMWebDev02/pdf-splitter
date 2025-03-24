@@ -16,5 +16,6 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: start;
-  gap: 2%;
+  gap: 1%;
+  width: 80%;
 }
