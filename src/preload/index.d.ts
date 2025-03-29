@@ -9,7 +9,7 @@ declare global {
       getHomeDirectory: () => string;
       getDirectoryFolders: (dirPath: string) => Promise<Dirent[]>;
       joinPaths: (pathsArr: string[]) => string;
-      parentPath: (pathString: string) => string;
+      parentPathString: (pathString: string, drivesList: string[]) => string;
       getUserHomeDir: () => string;
       getAllDrives: () => Promise<string[]>
     };

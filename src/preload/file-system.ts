@@ -7,7 +7,7 @@ const userHomeDir = os.homedir();
 export async function getFolders(dirPath: string) {
   const allFolders = await fs.readdir(dirPath, { withFileTypes: true });
 
-  return allFolders.filter((item) => item.isDirectory() && item.name[0] !== '.');
+  return allFolders.filter((item) => item.isDirectory() && item.name[0] !== '.' && item.name.toLocaleLowerCase() !== `\$RECYCLE.BIN`.toLocaleLowerCase() && item.name.toLocaleLowerCase() !== 'System Volume Information'.toLocaleLowerCase());
 }
 
 export function getHomeDir() {

@@ -17,7 +17,12 @@ export function joinPaths(pathArr: string[]) {
   return finalPath;
 }
 
-export function parentPath(pathString: string) {
-  if (pathString === '' || pathString === userHomeDir) return userHomeDir;
+export function parentPathString(pathString: string, driveList: string[]) {
+  // Prevents the user from accessing parent elements if the path string is an empty string.
+  // Or if the string is the root of the drive return the same drive path.
+  if (pathString === '') return userHomeDir;
+  for (const drive of driveList) {
+    if (pathString === drive) return drive;
+  }
   return path.dirname(pathString);
 }

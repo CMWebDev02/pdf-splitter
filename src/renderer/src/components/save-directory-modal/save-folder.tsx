@@ -26,14 +26,16 @@ export default function SaveFolder({ saveFolderPath, setSaveFolderPath, isModalS
   }, []);
 
   function updateSaveFolderPath() {
-    setSaveFolderPath(currentDirectoryPath);
-    toggleModal();
+    if (currentDirectoryPath !== '') {
+      setSaveFolderPath(currentDirectoryPath);
+      toggleModal();
+    }
   }
 
   function displayDirectoryModal() {
     toggleModal();
-    const userHomeDir = window.api.getUserHomeDir();
-    getDirectories(userHomeDir);
+    setCurrentDirectoryPath('');
+    setDirectoryObjArray([]);
   }
 
   async function getDirectories(directoryPath: string) {
@@ -44,7 +46,8 @@ export default function SaveFolder({ saveFolderPath, setSaveFolderPath, isModalS
   }
 
   function displayParentDirectory() {
-    const parentDirectory = window.api.parentPath(currentDirectoryPath);
+    if (drivesList.length < 0) return;
+    const parentDirectory = window.api.parentPathString(currentDirectoryPath, drivesList);
     getDirectories(parentDirectory);
   }
 

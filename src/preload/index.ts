@@ -2,7 +2,7 @@ import { contextBridge } from 'electron';
 import { electronAPI } from '@electron-toolkit/preload';
 import { createNewPDF, getPDFURIs } from './pdf';
 import { getAllDrives, getFolders, getHomeDir } from './file-system';
-import { getUserHomeDir, joinPaths, parentPath } from './utils';
+import { getUserHomeDir, joinPaths, parentPathString } from './utils';
 
 // Custom APIs for renderer
 const api = {
@@ -11,7 +11,7 @@ const api = {
   getHomeDirectory: getHomeDir,
   getDirectoryFolders: getFolders,
   joinPaths: joinPaths,
-  parentPath: parentPath,
+  parentPathString: parentPathString,
   getUserHomeDir: getUserHomeDir,
   getAllDrives: getAllDrives
 };
