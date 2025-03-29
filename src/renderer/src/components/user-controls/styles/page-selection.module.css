@@ -18,7 +18,7 @@
 }
 
 /* Changes all flex columns divs into rows */
-@media (min-width: 990px) {
+@media (min-width: 1120px) {
   .mainContainer {
     flex-direction: row;
   }
