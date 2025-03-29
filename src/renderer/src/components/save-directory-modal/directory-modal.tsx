@@ -13,7 +13,7 @@ interface DirectoryModalProps {
 }
 
 export default function DirectoryModal({ directories, getDirectories, updateSaveFolderPath, displayParentDirectory, currentDirectoryPath }: DirectoryModalProps) {
-  const [ drivesList, setDrivesList ] = useState<string[]>([]);
+  const [drivesList, setDrivesList] = useState<string[]>([]);
 
   const RenderDirectories = () => {
     return directories.length > 0 ? (
@@ -28,11 +28,11 @@ export default function DirectoryModal({ directories, getDirectories, updateSave
   useEffect(() => {
     async function getDrives() {
       const drives = await window.api.getAllDrives();
-      setDrivesList(drives)
+      setDrivesList(drives);
     }
 
     getDrives();
-  }, [])
+  }, []);
 
   return (
     <div className={styles.directoryModal}>
@@ -47,7 +47,9 @@ export default function DirectoryModal({ directories, getDirectories, updateSave
       </div>
       <div className={styles.directoryOptionsDiv}>
         <RenderDirectories />
-        {drivesList.map(letter => <h2>{letter}</h2>)}
+        {drivesList.map((letter) => (
+          <h2>{letter}</h2>
+        ))}
       </div>
     </div>
   );

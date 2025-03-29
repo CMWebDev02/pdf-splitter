@@ -16,16 +16,16 @@
 }
 
 /* Changes all flex columns divs into rows */
-@media (min-width: 870px) {
+@media (min-width: 990px) {
   .inputContainer {
     flex-direction: row;
   }
   
   .inputContainer > label {
-    width: 30%;
+    width: 40%;
   }
   
   .inputContainer > input {
-    width: 70%;
+    width: 60%;
   }
 }

@@ -17,7 +17,7 @@ export function getHomeDir() {
 export async function getAllDrives() {
   try {
     const allDrives = await getDiskInfo();
-    return allDrives.map(drive => drive.mounted);
+    return allDrives.map((drive) => drive.mounted);
   } catch (error) {
     console.log(error);
     return [];
