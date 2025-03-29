@@ -24,6 +24,11 @@
   color: var(--secondary-text-color);
 }
 
+.modalFooter {
+  display: flex;
+  justify-content: space-around;
+}
+
 .directoryOptionsDiv {
   overflow-y: auto;
   display: flex;

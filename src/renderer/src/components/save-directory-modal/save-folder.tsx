@@ -1,4 +1,4 @@
-import { useState, type Dispatch } from 'react';
+import { useEffect, useState, type Dispatch } from 'react';
 import DirectoryModal from './directory-modal';
 import type { Dirent } from 'fs';
 
@@ -14,6 +14,16 @@ interface SaveFolderProps {
 export default function SaveFolder({ saveFolderPath, setSaveFolderPath, isModalShown, toggleModal }: SaveFolderProps) {
   const [directoryObjArray, setDirectoryObjArray] = useState<Dirent[]>([]);
   const [currentDirectoryPath, setCurrentDirectoryPath] = useState<string>('');
+  const [drivesList, setDrivesList] = useState<string[]>([]);
+
+  useEffect(() => {
+    async function getDrives() {
+      const drives = await window.api.getAllDrives();
+      setDrivesList(drives);
+    }
+
+    getDrives();
+  }, []);
 
   function updateSaveFolderPath() {
     setSaveFolderPath(currentDirectoryPath);
@@ -45,7 +55,7 @@ export default function SaveFolder({ saveFolderPath, setSaveFolderPath, isModalS
         <p>{saveFolderPath}</p>
       </div>
 
-      {isModalShown && <DirectoryModal directories={directoryObjArray} getDirectories={getDirectories} updateSaveFolderPath={updateSaveFolderPath} displayParentDirectory={displayParentDirectory} currentDirectoryPath={currentDirectoryPath} />}
+      {isModalShown && <DirectoryModal directories={directoryObjArray} getDirectories={getDirectories} updateSaveFolderPath={updateSaveFolderPath} displayParentDirectory={displayParentDirectory} currentDirectoryPath={currentDirectoryPath} drivesList={drivesList} toggleModal={toggleModal} />}
     </>
   );
 }

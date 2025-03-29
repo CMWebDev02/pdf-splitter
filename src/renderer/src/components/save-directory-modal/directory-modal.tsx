@@ -2,7 +2,7 @@ import type { Dirent } from 'fs';
 import DirectoryOption from './directory-option';
 
 import styles from './styles/directory-modal.module.css';
-import { useEffect, useState } from 'react';
+import { DriveSelector } from './drive-selector';
 
 interface DirectoryModalProps {
   directories: Dirent[];
@@ -10,10 +10,11 @@ interface DirectoryModalProps {
   updateSaveFolderPath: () => void;
   displayParentDirectory: () => void;
   currentDirectoryPath: string;
+  drivesList: string[];
+  toggleModal: () => void;
 }
 
-export default function DirectoryModal({ directories, getDirectories, updateSaveFolderPath, displayParentDirectory, currentDirectoryPath }: DirectoryModalProps) {
-  const [drivesList, setDrivesList] = useState<string[]>([]);
+export default function DirectoryModal({ directories, getDirectories, updateSaveFolderPath, displayParentDirectory, currentDirectoryPath, drivesList, toggleModal }: DirectoryModalProps) {
 
   const RenderDirectories = () => {
     return directories.length > 0 ? (
@@ -25,31 +26,23 @@ export default function DirectoryModal({ directories, getDirectories, updateSave
     );
   };
 
-  useEffect(() => {
-    async function getDrives() {
-      const drives = await window.api.getAllDrives();
-      setDrivesList(drives);
-    }
-
-    getDrives();
-  }, []);
-
   return (
     <div className={styles.directoryModal}>
       <div className={styles.modalHeader}>
-        <button onClick={updateSaveFolderPath} className="interfaceButton">
-          Save
-        </button>
         <h2>{currentDirectoryPath}</h2>
-        <button onClick={displayParentDirectory} className="interfaceButton">
-          Return
-        </button>
+        <button className='interfaceButton' onClick={toggleModal}>X</button>
       </div>
       <div className={styles.directoryOptionsDiv}>
         <RenderDirectories />
-        {drivesList.map((letter) => (
-          <h2>{letter}</h2>
-        ))}
+      </div>
+      <div className={styles.modalFooter}>
+        <button onClick={updateSaveFolderPath} className="interfaceButton">
+          Save
+        </button>
+        <DriveSelector drivesList={drivesList} getDirectories={getDirectories} />
+        <button onClick={displayParentDirectory} className="interfaceButton">
+          Return
+        </button>
       </div>
     </div>
   );
