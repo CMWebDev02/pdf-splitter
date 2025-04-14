@@ -12,6 +12,7 @@ import { LabeledCheckBox } from './components/user-controls/labeled-checkbox';
 import { PDFDisplayContainer } from './components/pdf-display/pdf-display-container';
 import { SaveFolderLocation } from './utils/local-storage';
 import { PopUpContainer } from './components/pop-ups/pop-up-container';
+import { PopUpObject, WorkerInstructionsMessage } from './utils/types';
 
 export function App(): JSX.Element {
   // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
@@ -55,7 +56,7 @@ export function App(): JSX.Element {
 
       const pdfArrayBuffer = await e.target.files[0].arrayBuffer();
       const pdfURIs = await window.api.splitPDF(pdfArrayBuffer);
-
+      
       setPDFURLsArray(pdfURIs);
       setSelectedPageArray([]);
       setHiddenPages([]);
