@@ -101,7 +101,7 @@ export function App(): JSX.Element {
   async function createNewFile() {
     if (pdfFile !== null) {
       const pdfFileArrayBuffer = await pdfFile.arrayBuffer();
-      const isFileCreated = window.api.createNewPDF(selectedPageArray, saveFolderPath, newFileName, pdfFileArrayBuffer);
+      const [isFileCreated, savedFileName] = await window.api.createNewPDF(selectedPageArray, saveFolderPath, newFileName, pdfFileArrayBuffer);
       setHiddenPages((prevArray) => {
         let newArray: number[] = [...prevArray];
         for (const page of selectedPageArray) {
@@ -114,7 +114,7 @@ export function App(): JSX.Element {
 
       if (isFileCreated) {
         setCurrentPopUps((prevArray) => {
-          const newMessage: PopUpObject = { success: true, message: `File ${newFileName}.pdf Created.`, time: Date.now() };
+          const newMessage: PopUpObject = { success: true, message: `File ${savedFileName}.pdf Created.`, time: Date.now() };
           return [newMessage, ...prevArray];
         });
         setSelectedPageArray([]);
