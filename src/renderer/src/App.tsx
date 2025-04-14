@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import PDFFileSelector from './components/user-controls/pdf-file-selector';
 import LabeledInput from './components/user-controls/labeled-input';
@@ -36,6 +36,8 @@ export function App(): JSX.Element {
 
   const [currentPopUps, setCurrentPopUps] = useState<PopUpObject[]>([]);
 
+  const pdfDisplayDivRef = useRef<HTMLDivElement | null>(null);
+
   function toggleModal() {
     setIsModalShown(!isModalShown);
   }
@@ -56,7 +58,7 @@ export function App(): JSX.Element {
 
       const pdfArrayBuffer = await e.target.files[0].arrayBuffer();
       const pdfURIs = await window.api.splitPDF(pdfArrayBuffer);
-      
+
       setPDFURLsArray(pdfURIs);
       setSelectedPageArray([]);
       setHiddenPages([]);
@@ -117,6 +119,14 @@ export function App(): JSX.Element {
         });
         setSelectedPageArray([]);
         setNewFileName('');
+
+        if (pdfDisplayDivRef.current !== null) {
+          pdfDisplayDivRef.current.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          });
+        }
       }
     }
   }
@@ -182,7 +192,7 @@ export function App(): JSX.Element {
           </div>
           <PopUpContainer popUpsArray={currentPopUps} />
         </div>
-        <PDFDisplayContainer PDFURLsArray={PDFURLsArray} isViewTwoPages={isViewTwoPages} addPageToArray={addPageToArray} hiddenPagesArray={hiddenPages} arePagesHidden={arePagesHidden} />
+        <PDFDisplayContainer PDFURLsArray={PDFURLsArray} isViewTwoPages={isViewTwoPages} addPageToArray={addPageToArray} hiddenPagesArray={hiddenPages} arePagesHidden={arePagesHidden} divRef={pdfDisplayDivRef} />
       </main>
     </>
   );
