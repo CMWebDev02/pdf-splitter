@@ -1,3 +1,4 @@
+import { PopUpObject } from '@renderer/utils/types';
 import styles from './styles/pop-up.module.css';
 
 interface PopUpProps {

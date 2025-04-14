@@ -1,3 +1,4 @@
+import { PopUpObject } from '@renderer/utils/types';
 import { PopUp } from './pop-up';
 
 import styles from './styles/pop-up-container.module.css';
