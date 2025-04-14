@@ -12,7 +12,7 @@ import { LabeledCheckBox } from './components/user-controls/labeled-checkbox';
 import { PDFDisplayContainer } from './components/pdf-display/pdf-display-container';
 import { SaveFolderLocation } from './utils/local-storage';
 import { PopUpContainer } from './components/pop-ups/pop-up-container';
-import { PopUpObject, WorkerInstructionsMessage } from './utils/types';
+import { PopUpObject } from './utils/types';
 
 export function App(): JSX.Element {
   // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
