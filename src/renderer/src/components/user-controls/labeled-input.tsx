@@ -28,7 +28,7 @@ export default function LabeledInput({ setValue, currentValue, labelText, trigge
       return () => {
         removeEventListener('keydown', activateShortCut);
       };
-    }, []);
+    }, [triggerFileCreation]);
 
   function gainFocus() {
     if (inputRef.current) {

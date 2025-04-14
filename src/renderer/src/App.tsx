@@ -84,6 +84,7 @@ export function App(): JSX.Element {
       errorMessage = 'Enter A Valid File Name!';
     }
 
+    console.log(pdfFile)
     if (errorMessage !== '') {
       setCurrentPopUps((prevArray) => {
         const newMessage: PopUpObject = { success: false, message: errorMessage, time: Date.now() };
