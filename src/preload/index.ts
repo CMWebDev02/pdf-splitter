@@ -1,6 +1,6 @@
 import { contextBridge } from 'electron';
 import { electronAPI } from '@electron-toolkit/preload';
-import { createNewPDF, getPDFURIs } from './pdf';
+import { createNewPDF, deleteNewPDF, getPDFURIs } from './pdf';
 import { getAllDrives, getFolders, getHomeDir } from './file-system';
 import { getUserHomeDir, joinPaths, parentPathString } from './utils';
 
@@ -13,7 +13,8 @@ const api = {
   joinPaths: joinPaths,
   parentPathString: parentPathString,
   getUserHomeDir: getUserHomeDir,
-  getAllDrives: getAllDrives
+  getAllDrives: getAllDrives,
+  deleteNewPDF: deleteNewPDF
 };
 
 // Use `contextBridge` APIs to expose Electron APIs to

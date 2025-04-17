@@ -12,6 +12,7 @@ declare global {
       parentPathString: (pathString: string, drivesList: string[]) => string;
       getUserHomeDir: () => string;
       getAllDrives: () => Promise<string[]>;
+      deleteNewPDF: (saveFolderPath: string, fileName: string) => Promise<boolean>;
     };
   }
 }

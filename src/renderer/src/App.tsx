@@ -47,10 +47,10 @@ export function App(): JSX.Element {
   }, [saveFolderPath]);
 
   useEffect(() => {
-    if (currentPopUps.length > 10) {
-      setCurrentPopUps((prevArray) => prevArray.slice(0, 10));
+    if (currentPopUps.length > 0) {
+      setCurrentPopUps([]);
     }
-  }, [currentPopUps]);
+  }, [pdfFile, saveFolderPath]);
 
   async function loadDisplayPDF(e: ChangeEvent<HTMLInputElement>) {
     if (e.target !== null && e.target?.files !== null) {
@@ -89,7 +89,7 @@ export function App(): JSX.Element {
 
     if (errorMessage !== '') {
       setCurrentPopUps((prevArray) => {
-        const newMessage: PopUpObject = { success: false, message: errorMessage, time: Date.now() };
+        const newMessage: PopUpObject = { success: false, message: errorMessage, id: `${Date.now()}-${Math.random()}`, undoBtn: false };
         return [newMessage, ...prevArray];
       });
       return;
@@ -114,7 +114,7 @@ export function App(): JSX.Element {
 
       if (isFileCreated) {
         setCurrentPopUps((prevArray) => {
-          const newMessage: PopUpObject = { success: true, message: `File ${savedFileName}.pdf Created.`, time: Date.now() };
+          const newMessage: PopUpObject = { success: true, message: `File ${savedFileName} Created.`, id: `${Date.now()}-${Math.random()}`, undoBtn: true, fileName: savedFileName, saveLocation: saveFolderPath, hiddenPages: selectedPageArray };
           return [newMessage, ...prevArray];
         });
         setSelectedPageArray([]);
@@ -143,7 +143,7 @@ export function App(): JSX.Element {
     });
     setSelectedPageArray([]);
     setCurrentPopUps((prevArray) => {
-      const newMessage: PopUpObject = { success: true, message: `Pages Hidden.`, time: Date.now() };
+      const newMessage: PopUpObject = { success: true, message: `Pages Hidden.`, id: `${Date.now()}-${Math.random()}`, undoBtn: false };
       return [newMessage, ...prevArray];
     });
   }
@@ -151,7 +151,7 @@ export function App(): JSX.Element {
   function resetHiddenPages() {
     setHiddenPages([]);
     setCurrentPopUps((prevArray) => {
-      const newMessage: PopUpObject = { success: true, message: `Pages Revealed.`, time: Date.now() };
+      const newMessage: PopUpObject = { success: true, message: `Pages Revealed.`, id: `${Date.now()}-${Math.random()}`, undoBtn: false };
       return [newMessage, ...prevArray];
     });
   }
@@ -190,7 +190,7 @@ export function App(): JSX.Element {
               Split PDF
             </button>
           </div>
-          <PopUpContainer popUpsArray={currentPopUps} />
+          <PopUpContainer popUpsArray={currentPopUps} alterPopUpsArray={setCurrentPopUps} alterHiddenPagesArray={setHiddenPages} />
         </div>
         <PDFDisplayContainer PDFURLsArray={PDFURLsArray} isViewTwoPages={isViewTwoPages} addPageToArray={addPageToArray} hiddenPagesArray={hiddenPages} arePagesHidden={arePagesHidden} divRef={pdfDisplayDivRef} />
       </main>

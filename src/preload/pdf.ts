@@ -96,3 +96,14 @@ export async function createNewPDF(selectedPages: number[], saveFolderPath: stri
     return [false, ''];
   }
 }
+
+export async function deleteNewPDF(saveFolderPath: string, fileName: string) {
+  try {
+    const filePath = path.join(saveFolderPath, fileName);
+    await fs.rm(filePath);
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
