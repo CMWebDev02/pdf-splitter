@@ -1,7 +1,7 @@
 {
   "name": "pdf-splitter",
-  "version": "1.0.0",
-  "description": "An Electron application with React and TypeScript",
+  "version": "1.5.0",
+  "description": "A pdf manipulator for user to split their pdfs into multiple files.",
   "main": "./out/main/index.js",
   "author": "example.com",
   "homepage": "https://electron-vite.org",
