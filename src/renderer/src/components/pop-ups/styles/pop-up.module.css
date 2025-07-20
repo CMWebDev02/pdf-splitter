@@ -1,0 +1,9 @@
+.successfulMessage {
+  color: var(--main-text-color);
+  text-shadow: 0 0 3px blue;
+}
+
+.errorMessage {
+  color: var(--main-text-color);
+  text-shadow: 0 0 3px red;
+}

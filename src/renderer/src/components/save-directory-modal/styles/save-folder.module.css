@@ -1,0 +1,17 @@
+.saveFolderDisplayDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  gap: 1rem;
+}
+
+.saveFolderDisplayDiv > h2 {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  cursor: pointer;
+  user-select: none;
+}
+
+.saveFolderDisplayDiv > p {
+  font-size: clamp(0.75rem, 2vw, 1rem);
+}

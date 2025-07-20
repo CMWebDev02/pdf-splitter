@@ -1,0 +1,35 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fileDisplayContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fileDisplayContainer > h2 {
+  width: 100%;
+}
+
+.fileDisplayContainer > p {
+  width: 100%;
+}
+
+/* Changes all flex columns divs into rows */
+@media (min-width: 1100px) {
+  .fileDisplayContainer {
+    flex-direction: row;
+  }
+
+  .fileDisplayContainer > h2 {
+    width: 50%;
+  }
+
+  .fileDisplayContainer > p {
+    width: 50%;
+  }
+}

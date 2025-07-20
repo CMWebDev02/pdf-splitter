@@ -1,0 +1,77 @@
+:root {
+  --base-padding: 0.5rem;
+
+  --main-background-color: #ffffff;
+  --secondary-background-color: #ebebeb;
+  --main-text-color: #2e0e02;
+  --secondary-text-color: #ebebeb;
+
+  --accent-color-one: #133c55;
+  --accent-color-two: #8ba6a9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  scrollbar-color: var(--accent-color-one) var(--secondary-background-color);
+}
+
+html {
+  height: 100vh;
+  width: 100vw;
+  min-width: 530px;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+
+  background-color: var(--main-background-color);
+  color: var(--main-text-color);
+}
+
+.interfaceButton {
+  padding: 0.3rem;
+
+  color: var(--secondary-text-color);
+  background-color: var(--accent-color-one);
+  border: 1px solid var(--accent-color-one);
+  border-radius: 0.75rem;
+}
+
+.interfaceButton:hover {
+  color: var(--secondary-text-color);
+  background-color: var(--accent-color-one);
+  border: 1px solid var(--secondary-background-color);
+  user-select: none;
+
+  cursor: pointer;
+}
+
+.interfaceInput {
+  background-color: var(--main-background-color);
+  color: var(--main-text-color);
+  border: 1px solid var(--accent-color-two);
+
+  padding: 0.2rem;
+}
+
+.interfaceInput:focus {
+  border: 1px solid var(--main-text-color);
+  outline: none;
+}
+
+iframe {
+  display: block;
+  background: #000;
+  border: none;
+  height: 100%;
+  width: 100%;
+}
