@@ -40,6 +40,6 @@ appImage:
 npmRebuild: false
 publish:
   provider: generic
-  url: https://example.com/auto-updates
+  url: https://github.com/CMWebDev02/pdf-splitter
 electronDownload:
   mirror: https://npmmirror.com/mirrors/electron/

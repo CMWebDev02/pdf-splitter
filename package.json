@@ -1,10 +1,10 @@
 {
   "name": "pdf-splitter",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A pdf manipulator for user to split their pdfs into multiple files.",
   "main": "./out/main/index.js",
-  "author": "example.com",
-  "homepage": "https://electron-vite.org",
+  "author": "https://cmwebdev02.github.io/",
+  "homepage": "https://github.com/CMWebDev02/pdf-splitter",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
