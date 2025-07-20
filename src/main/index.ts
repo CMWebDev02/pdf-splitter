@@ -21,6 +21,7 @@ function createWindow(): void {
   })
 
   mainWindow.on('ready-to-show', () => {
+    mainWindow.setTitle("PDF Splitter")
     mainWindow.show()
     // Opens dev tools upon launching the app, for troubleshooting purposes.
     // mainWindow.webContents.openDevTools()
