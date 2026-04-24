@@ -1,4 +1,4 @@
-appId: com.electron.app
+appId: com.cmwebdev.pdf-splitter
 productName: PDF Splitter
 directories:
   buildResources: build
